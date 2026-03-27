@@ -1,0 +1,27 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
+
+import '../models/vault_file_model.dart';
+
+class VaultNotifier extends Notifier<List<VaultFile>> {
+  final _vaultBox = Hive.box<VaultFile>('vaultBox');
+
+  @override
+  List<VaultFile> build() {
+    return _vaultBox.values.toList();
+  }
+
+  void addFile(VaultFile file) {
+    _vaultBox.put(file.id, file);
+    state = _vaultBox.values.toList();
+  }
+
+  void deleteFile(String id) {
+    _vaultBox.delete(id);
+    state = _vaultBox.values.toList();
+  }
+}
+
+final vaultProvider = NotifierProvider<VaultNotifier, List<VaultFile>>(() {
+  return VaultNotifier();
+});

@@ -8,6 +8,7 @@ MedVault is a Flutter application designed for medical students to track their s
 
 ### Version 1.0
 
+*   **Application ID:** `com.rethink.app`
 *   **UI/UX:**
     *   **Theme:** Dark theme with a custom color palette (teal, purple, amber).
     *   **Glassmorphism:** Used for cards and other UI elements to create a sense of depth.
@@ -22,11 +23,10 @@ MedVault is a Flutter application designed for medical students to track their s
 
 ## Current Plan
 
-**Request:** Run the project.
+**Request:** Change default id to com.rethink.app.
 
 **Steps:**
 
-1.  **Update `lib/main.dart`:** Replace the content of the main Dart file with the new UI and logic.
-2.  **Add Dependencies:** Add `hive_flutter` and `flutter_riverpod` to `pubspec.yaml`.
-3.  **Fix Analysis Issues:** Correct errors in `test/widget_test.dart` and `lib/main.dart`.
-4.  **Run the App:** Execute `flutter run` to launch the application.
+1.  **Update `android/app/build.gradle.kts`:** Changed `namespace` and `applicationId` to `com.rethink.app`.
+2.  **Update Package Structure:** Updated `MainActivity.kt` package name and moved it to `android/app/src/main/kotlin/com/rethink/app/`.
+3.  **Stability Checks:** Run `flutter analyze` and `flutter test`.

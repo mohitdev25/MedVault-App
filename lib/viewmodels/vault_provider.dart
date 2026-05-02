@@ -25,3 +25,11 @@ class VaultNotifier extends Notifier<List<VaultFile>> {
 final vaultProvider = NotifierProvider<VaultNotifier, List<VaultFile>>(() {
   return VaultNotifier();
 });
+
+final filteredVaultProvider = Provider.family<List<VaultFile>, String>((ref, category) {
+  final files = ref.watch(vaultProvider);
+  if (category == 'All') {
+    return files;
+  }
+  return files.where((f) => f.category == category).toList();
+});

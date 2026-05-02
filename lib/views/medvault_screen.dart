@@ -51,7 +51,7 @@ class _MedVaultScreenState extends ConsumerState<MedVaultScreen> {
       filePath: file.path!,
       colorHex: AppColors.subjectColor(
         _selectedCategory == 'All' ? 'General' : _selectedCategory,
-      ).toARGB32(),
+      ).value,
     );
 
     ref.read(vaultProvider.notifier).addFile(vaultFile);

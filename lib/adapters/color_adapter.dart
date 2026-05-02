@@ -13,7 +13,6 @@ class ColorAdapter extends TypeAdapter<Color> {
 
   @override
   void write(BinaryWriter writer, Color obj) {
-    // ignore: deprecated_member_use
-    writer.writeInt(obj.toARGB32());
+    writer.writeInt(obj.value);
   }
 }

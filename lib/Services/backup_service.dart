@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer' as developer;
 import 'dart:io';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
@@ -67,8 +68,13 @@ class BackupService {
           File('${directory.path}/rethink_backup.json');
 
       await backupFile.writeAsString(jsonString);
-    } catch (_) {
-      // Silent fail — background service
+    } catch (e, stackTrace) {
+      developer.log(
+        'AutoBackup failed',
+        error: e,
+        stackTrace: stackTrace,
+        name: 'BackupService',
+      );
     }
   }
 }

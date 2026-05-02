@@ -109,17 +109,14 @@ class _MedVaultScreenState extends ConsumerState<MedVaultScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final files = ref.watch(vaultProvider);
-
-    final filteredFiles = _selectedCategory == 'All'
-        ? files
-        : files.where((f) => f.category == _selectedCategory).toList();
+    final totalFilesCount = ref.watch(vaultProvider.select((v) => v.length));
+    final filteredFiles = ref.watch(filteredVaultProvider(_selectedCategory));
 
     return Scaffold(
       backgroundColor: AppColors.scaffold,
       body: CustomScrollView(
         slivers: [
-          _buildAppBar(files.length),
+          _buildAppBar(totalFilesCount),
           SliverToBoxAdapter(child: _buildCategoryFilter()),
           filteredFiles.isEmpty
               ? SliverFillRemaining(child: _buildEmptyState())

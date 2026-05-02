@@ -14,7 +14,8 @@ import 'viewmodels/topic_provider.dart';
 import 'viewmodels/habit_provider.dart';
 import 'adapters/color_adapter.dart';
 import 'views/review_queue_screen.dart';
-import 'views/review_screen.dart' ;
+import 'views/review_screen.dart';
+import 'views/medvault_screen.dart';
 import 'package:myapp/theme/app_colors.dart';
 
 void main() async {
@@ -1023,22 +1024,3 @@ class _SheetField extends StatelessWidget {
   }
 }
 
-// --- Restored MedVault Screen ---
-class MedVaultScreen extends ConsumerStatefulWidget {
-  const MedVaultScreen({super.key});
-
-  @override
-  ConsumerState<MedVaultScreen> createState() => _MedVaultScreenState();
-}
-
-class _MedVaultScreenState extends ConsumerState<MedVaultScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'MedVault Library',
-        style: TextStyle(color: Colors.white, fontSize: 20),
-      ),
-    );
-  }
-}

@@ -7,6 +7,7 @@ import 'package:myapp/models/vault_file_model.dart';
 import 'package:myapp/theme/app_colors.dart';
 import 'package:myapp/viewmodels/vault_provider.dart';
 import 'package:uuid/uuid.dart';
+import 'search_overlay.dart';
 
 class MedVaultScreen extends ConsumerStatefulWidget {
   const MedVaultScreen({super.key});
@@ -160,6 +161,7 @@ class _MedVaultScreenState extends ConsumerState<MedVaultScreen> {
       floating: true,
       pinned: false,
       elevation: 0,
+      toolbarHeight: 120,
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -172,11 +174,60 @@ class _MedVaultScreenState extends ConsumerState<MedVaultScreen> {
               letterSpacing: -0.5,
             ),
           ),
+          const SizedBox(height: 4),
           Text(
             '$totalFiles files stored',
             style: const TextStyle(
               color: AppColors.textSecondary,
               fontSize: 13,
+            ),
+          ),
+          const SizedBox(height: 16),
+          // Android 16 Style Pill Search Bar
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  opaque: false,
+                  pageBuilder: (context, _, __) => const SearchOverlay(),
+                  transitionsBuilder: (context, animation, _, child) {
+                    return FadeTransition(opacity: animation, child: child);
+                  },
+                ),
+              );
+            },
+            child: Hero(
+              tag: 'search_bar',
+              child: Material(
+                type: MaterialType.transparency,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: AppColors.surface,
+                    borderRadius: BorderRadius.circular(32),
+                    border: Border.all(color: AppColors.glassBorder),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withAlpha(40),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: const Row(
+                    children: [
+                      Icon(Icons.search, color: AppColors.textSecondary),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          'Search your vault...',
+                          style: TextStyle(color: AppColors.textSecondary, fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
         ],

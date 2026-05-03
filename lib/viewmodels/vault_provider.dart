@@ -33,3 +33,10 @@ final filteredVaultProvider = Provider.family<List<VaultFile>, String>((ref, cat
   }
   return files.where((f) => f.category == category).toList();
 });
+
+final searchVaultProvider = Provider.autoDispose.family<List<VaultFile>, String>((ref, query) {
+  if (query.isEmpty) return [];
+  final files = ref.watch(vaultProvider);
+  final lowerQuery = query.toLowerCase();
+  return files.where((f) => f.name.toLowerCase().contains(lowerQuery)).toList();
+});

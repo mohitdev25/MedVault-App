@@ -116,3 +116,12 @@ class TopicNotifier extends Notifier<List<Topic>> {
     }).toList();
   }
 }
+
+final searchTopicsProvider = Provider.autoDispose.family<List<Topic>, String>((ref, query) {
+  if (query.isEmpty) return [];
+  final topics = ref.watch(topicProvider);
+  final lowerQuery = query.toLowerCase();
+  return topics.where((t) =>
+      t.title.toLowerCase().contains(lowerQuery) ||
+      t.markdownNote.toLowerCase().contains(lowerQuery)).toList();
+});

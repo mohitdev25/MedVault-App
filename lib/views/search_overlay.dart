@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,12 +26,13 @@ class _SearchOverlayState extends ConsumerState<SearchOverlay> {
   final FocusNode _focusNode = FocusNode();
   String _query = '';
   bool _isConnected = false;
+  StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
 
   @override
   void initState() {
     super.initState();
     _checkConnectivity();
-    Connectivity().onConnectivityChanged.listen((result) {
+    _connectivitySubscription = Connectivity().onConnectivityChanged.listen((result) {
       if (mounted) {
         setState(() {
           _isConnected = !result.contains(ConnectivityResult.none);
@@ -61,6 +63,7 @@ class _SearchOverlayState extends ConsumerState<SearchOverlay> {
 
   @override
   void dispose() {
+    _connectivitySubscription?.cancel();
     _searchController.dispose();
     _focusNode.dispose();
     super.dispose();
